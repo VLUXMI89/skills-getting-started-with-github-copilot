@@ -11,7 +11,19 @@ document.addEventListener("DOMContentLoaded", () => {
       const activities = await response.json();
 
       // Clear loading message
-      activitiesList.innerHTML = "";
+      activityCard.innerHTML = `
+  <h4>${name}</h4>
+  <p>${details.description}</p>
+  <p><strong>Schedule:</strong> ${details.schedule}</p>
+  <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+  <div class="participants-section">
+    <h5>Participants:</h5>
+    ${details.participants && details.participants.length > 0 
+      ? `<ul>${details.participants.map(email => `<li>${email}</li>`).join('')}</ul>`
+      : '<p>No participants yet.</p>'
+    }
+  </div>
+`;
 
       // Populate activities list
       Object.entries(activities).forEach(([name, details]) => {
